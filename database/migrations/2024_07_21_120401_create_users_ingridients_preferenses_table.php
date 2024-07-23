@@ -14,7 +14,16 @@ return new class extends Migration
         Schema::create('users_ingridients_preferenses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('ingredient_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade');
+
+            $table->unique(['user_id', 'ingredient_id']);
         });
+
+        
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -17,10 +19,25 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+    
+        'first_name',
+        'last_name',
+        'weight',
+        'height',
+        'birthday_date',
+        'activity_level',
+         'type',
+        
+         'email',
         'password',
     ];
+ 
+  
+
+
+
+
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,4 +61,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function dailyIntakes():HasMany
+    {
+        return $this->hasMany(DailyIntake::class);
+    }
+
+    public function ingredients():BelongsToMany
+    {
+        return $this->belongsToMany(Ingredient::class);
+    }
+
+
+
+
 }

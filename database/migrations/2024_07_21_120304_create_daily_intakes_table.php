@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('daily_intakes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+          
         });
     }
 
