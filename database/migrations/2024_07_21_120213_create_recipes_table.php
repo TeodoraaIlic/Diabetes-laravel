@@ -14,6 +14,14 @@ return new class extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('name',32);
+            $table->string('description');
+            $table->integer('kcal');
+            $table->decimal('carbohydrate',10,2);
+            $table->decimal('fat',10,2);
+            $table->decimal('protein',10,2);
+
+
         });
     }
 

@@ -10,10 +10,26 @@ use App\Models\User;
 class Ingredient extends Model
 {
     use HasFactory;
+    protected $fillable = [
+    
+        'name',
+        'category',
+        'kcal',
+        'carbohydrate',
+        'fat',
+        'protein',
+        'measurement_unit',
+        
+        
+    ];
+
+
+
+
 
     public function users():BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->using(UserIngridientPreferense::class);
 
     }
 

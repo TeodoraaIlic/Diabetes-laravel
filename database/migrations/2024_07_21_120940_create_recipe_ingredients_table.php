@@ -11,18 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_recipe_ratings', function (Blueprint $table) {
+        Schema::create('recipe_ingredients', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('ingredient_id');
             $table->unsignedBigInteger('recipe_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade');
             $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
-            $table->integer('rating');
+            $table->integer('quantity');
         });
-        
-        
-        DB::statement('ALTER TABLE user_recipe_ratings ADD CONSTRAINT check_rating CHECK (rating >= 1 AND rating <= 5)');
     }
 
     /**
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_recipe_ratings');
+        Schema::dropIfExists('recipe_ingredients');
     }
 };

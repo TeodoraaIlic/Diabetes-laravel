@@ -69,10 +69,13 @@ class User extends Authenticatable
 
     public function ingredients():BelongsToMany
     {
-        return $this->belongsToMany(Ingredient::class);
+        return $this->belongsToMany(Ingredient::class)->using(UserIngridientPreferense::class);
     }
 
-
+    public function recipes():BelongsToMany
+    {
+        return $this->belongsToMany(Recipe::class)->using(UserRecipeRating::class);
+    }
 
 
 }
