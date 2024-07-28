@@ -12,7 +12,7 @@ class Recipe extends Model
     protected $fillable = [
     
         'name',
-        'description',
+        'description',///ingrediants fali
         'kcal',
         'carbohydrate',
         'fat',
