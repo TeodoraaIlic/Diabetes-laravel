@@ -47,7 +47,7 @@ class RecipeController extends Controller
     {
         $recipe=Recipe::find($id);
         if ($recipe == null) {
-            return response()->json("Recipe not found",404);// [message=>'Recipe not found']
+            return response()->json('Recipe not found',404);// [message=>'Recipe not found']
         }
 
         $validatedData = $request->validate([
@@ -67,11 +67,15 @@ class RecipeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)// kroz postaman poslati neeki string
+    public function destroy(int $id)// kroz postaman poslati neeki string
     {
-        $recipe = Recipe::findOrFail($id);
-        $recipe->delete();
+        $recipe = Recipe::find($id);
+        if ($recipe == null) {
+            return response()->json('Recipe not found',404);
+        }
 
+        $recipe->delete();
+   
         return response()->json(null, 204);
     }
 }

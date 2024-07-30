@@ -10,7 +10,7 @@ Route::get('/', function () {
 });
 
 
-
+Route::delete('/recipes/{id}', [RecipeController::class, 'destroy']);
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::put('/recipes/{id}', [RecipeController::class, 'update']);
 Route::post('/recipes', [RecipeController::class, 'store']);
