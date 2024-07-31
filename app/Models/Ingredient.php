@@ -19,8 +19,7 @@ class Ingredient extends Model
         'fat',
         'protein',
         'measurement_unit',
-        
-        
+         
     ];
 
 
