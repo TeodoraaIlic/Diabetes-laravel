@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipe;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Models\Recipe;
 
 class RecipeController extends Controller
 {
-    
-    public function index():JsonResponse
+    public function index(): JsonResponse
     {
         $recipes = Recipe::all();
+
         return response()->json($recipes);
     }
 
-   
-    public function store(Request $request):JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:32',
@@ -31,23 +30,22 @@ class RecipeController extends Controller
         return response()->json($recipe, 201);
     }
 
-    
-    public function show(int $id):JsonResponse
+    public function show(int $id): JsonResponse
     {
         // $recipe = Recipe::findOrFail($id);// findOrfail return html
         $recipe = Recipe::find($id);
         if ($recipe == null) {
-            return response()->json("Recipe not found",404);// [message=>'Recipe not found']
+            return response()->json('Recipe not found', 404); // [message=>'Recipe not found']
         }
-        return response()->json($recipe,200);
+
+        return response()->json($recipe, 200);
     }
 
-    
-    public function update(Request $request, int $id):JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
-        $recipe=Recipe::find($id);
+        $recipe = Recipe::find($id);
         if ($recipe == null) {
-            return response()->json('Recipe not found',404);// [message=>'Recipe not found']
+            return response()->json('Recipe not found', 404); // [message=>'Recipe not found']
         }
 
         $validatedData = $request->validate([
@@ -61,7 +59,7 @@ class RecipeController extends Controller
 
         $recipe->update($validatedData);
 
-        return response()->json($recipe,204);
+        return response()->json($recipe, 204);
     }
 
     /**
@@ -71,11 +69,11 @@ class RecipeController extends Controller
     {
         $recipe = Recipe::find($id);
         if ($recipe == null) {
-            return response()->json('Recipe not found',404);
+            return response()->json('Recipe not found', 404);
         }
 
         $recipe->delete();
-   
+
         return response()->json(null, 204);
     }
 }

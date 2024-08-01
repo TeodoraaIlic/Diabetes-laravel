@@ -19,25 +19,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-    
+
         'first_name',
         'last_name',
         'weight',
         'height',
         'birthday_date',
         'activity_level',
-         'type',
-        
-         'email',
+        'type',
+
+        'email',
         'password',
     ];
- 
-  
-
-
-
-
-
 
     /**
      * The attributes that should be hidden for serialization.
@@ -62,20 +55,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function dailyIntakes():HasMany
+    public function dailyIntakes(): HasMany
     {
         return $this->hasMany(DailyIntake::class);
     }
 
-    public function ingredients():BelongsToMany
+    public function ingredients(): BelongsToMany
     {
         return $this->belongsToMany(Ingredient::class)->using(UserIngridientPreferense::class);
     }
 
-    public function recipes():BelongsToMany
+    public function recipes(): BelongsToMany
     {
         return $this->belongsToMany(Recipe::class)->using(UserRecipeRating::class);
     }
-
-
 }

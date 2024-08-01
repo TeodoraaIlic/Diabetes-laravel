@@ -9,28 +9,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Recipe extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-    
+
         'name',
-        'description',///ingrediants fali
+        'description', ///ingrediants fali
         'kcal',
         'carbohydrate',
         'fat',
         'protein',
-        
-        
+
     ];
 
-    public function users():BelongsToMany
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->using(UserRecipeRating::class);
 
     }
-
-
-
-
-
-
-
 }

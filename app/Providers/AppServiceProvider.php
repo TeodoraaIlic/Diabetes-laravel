@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::except([
-            'submit'
+            'submit',
         ]);
     }
 }

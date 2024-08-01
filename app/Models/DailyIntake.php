@@ -8,22 +8,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DailyIntake extends Model
 {
-    
-
     use HasFactory;
 
- protected $fillable=[
-    'breakfast',
-    'breakfast_portion',
-    'lunch',
-    'lunch_portion',
-    'dinner',
-    'dinner_portion'
-];
+    protected $fillable = [
+        'breakfast',
+        'breakfast_portion',
+        'lunch',
+        'lunch_portion',
+        'dinner',
+        'dinner_portion',
+    ];
 
-public function user():BelongsTo
-{
-    return $this->belongsTo(User::class);
-}
-
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
