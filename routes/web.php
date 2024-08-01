@@ -10,6 +10,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function () {
+    return view('test');
+});
+
 //rute za ingredientController
 Route::get('/ingredients', [IngredientController::class, 'index']);
 Route::post('/ingredients', [IngredientController::class, 'store']);

@@ -18,12 +18,17 @@ class Recipe extends Model
         'carbohydrate',
         'fat',
         'protein',
-
+        'meal_type',
     ];
 
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->using(UserRecipeRating::class);
-
     }
+
+    public function recipesWithIngredients(): BelongsToMany
+    {
+        return $this->belongsToMany(Ingredient::class)
+                    ->withPivot('quantity');
+    }// fja vraca listu ingredianta za neki proizvod
 }

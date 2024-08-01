@@ -20,8 +20,7 @@ return new class extends Migration
             $table->decimal('carbohydrate',10,2);
             $table->decimal('fat',10,2);
             $table->decimal('protein',10,2);
-
-
+            $table->enum('meal_type',['breakfast','lunch','dinner']);
         });
     }
 

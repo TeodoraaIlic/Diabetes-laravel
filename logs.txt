@@ -1,7 +1,7 @@
 List of endpoints required for fronted:
 
     Story: Home page
-    1. Returning list of recipes with id, name, pictures,calories
+    1. Returning list of recipes with id, name, pictures,calories :DONE
             with filtering (ingrediants, calories, etc,...) **** without ingrediants
        NOTE: return also rating (this can be done on 2 ways:
                                 1. pulling all the userratings that are related to this recipe and then
