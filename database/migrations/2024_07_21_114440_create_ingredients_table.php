@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('carbohydrate',10,2);
             $table->decimal('fat',10,2);
             $table->decimal('protein',10,2);
-            $table->enum('measurement_unit',['100_grams,100_ml,1_piece']);
+            $table->enum('measurement_unit',["100_grams","100_ml","1_piece"]);
         });
     }
 

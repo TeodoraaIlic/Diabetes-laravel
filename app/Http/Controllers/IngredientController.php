@@ -25,7 +25,7 @@ class IngredientController extends Controller
             'carbohydrate' => 'required|numeric|min:1',
             'fat' => 'required|numeric|min:1',
             'protein' => 'required|numeric|min:1',
-            'measurement_unit'=>'required|in:piece,100grams,100ml',
+            'measurement_unit'=>'required|in:1_piece,100_grams,100_ml',
         ]);
         $ingredient = Ingredient::create($validatedData);
 
@@ -69,7 +69,7 @@ class IngredientController extends Controller
         return response()->json($ingredient,204);
     }
 
-        public function destroy(int $id):JsonResponse
+    public function destroy(int $id):JsonResponse
     {
         $ingredient = Ingredient::find($id);
         if ($ingredient == null) {

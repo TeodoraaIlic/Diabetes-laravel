@@ -1,0 +1,42 @@
+List of endpoints required for fronted:
+
+    Story: Home page
+    1. Returning list of recipes with id, name, pictures,calories
+            with filtering (ingrediants, calories, etc,...) **** without ingrediants
+       NOTE: return also rating (this can be done on 2 ways:
+                                1. pulling all the userratings that are related to this recipe and then
+                                    everytime page is reloaded to again calculating the rating (BAD OPTION FOR PERMANCE)
+                                2.  add a new column inside Recipe and calculating rating when recipe is being made or edited and save value to new column
+                                    On this way we dont have to do calculation everytime       
+                                )
+    
+            
+
+    Story: Selecting 1 recipe     
+    2. Returning recipe by id with ingrediants that recipe contains
+        ** performing join with ingrediants 
+
+    Story: Adming panel working working with ingrediants
+    3. Returning all ingrediants (name, specs)
+    4. Creating new ingreadiant 
+    5. Upating new ingreadiant ( *** if ingreadiant kcal, protein, fat or carbohydrate is updated to update all recipes that contains this ingreadiant -> recalculate its 
+                                   specs according to changes ** TRICKY one)
+    
+    6. Returning all recipes with ingreadiant (same as 1.)
+    7. Updating recipe by id
+         possible changes:  1. chaning name
+                            2. chaning description
+                            3. deleting or inserting ingreadiants 
+    
+    8. User adding his daily intake
+    9. user updating his daily intake
+    10. user deliting his daily intake
+        1 intake per date!
+    
+    11. User rating the product -> also rating for product is recalculated
+    12. User removing rating for product-> also rating for product is recalculated
+    13. user updating rating for product-> also rating for product is recalculated
+
+
+                    
+    

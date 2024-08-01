@@ -11,19 +11,14 @@ class Ingredient extends Model
 {
     use HasFactory;
     protected $fillable = [
-    
         'name',
         'category',
         'kcal',
         'carbohydrate',
         'fat',
         'protein',
-        'measurement_unit',
-         
+        'measurement_unit',    
     ];
-
-
-
 
 
     public function users():BelongsToMany
