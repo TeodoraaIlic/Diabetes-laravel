@@ -62,10 +62,11 @@ class RecipeController extends Controller
     public function show(int $id): JsonResponse
     {
         // $recipe = Recipe::findOrFail($id);// findOrfail return html
-        $recipe = Recipe::find($id);
+        $recipe = Recipe::where('id',$id)->with('recipesWithIngredients')->get();
         if ($recipe == null) {
             return response()->json('Recipe not found', 404); // [message=>'Recipe not found']
         }
+
 
         return response()->json($recipe, 200);
     }
