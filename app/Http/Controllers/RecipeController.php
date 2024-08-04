@@ -15,7 +15,7 @@ class RecipeController extends Controller
             'name' => 'nullable|string|max:32',
             'ingredient_ids' => 'nullable|array',
             'ingredient_ids.*' => 'integer|exists:ingredients,id',
-            'page'=>'required|integer|min:1'
+            'page' => 'required|integer|min:1',
         ]);
 
         $query = Recipe::query();
@@ -30,15 +30,15 @@ class RecipeController extends Controller
             $query = $query->where('name', $name);
         }
 
-        if (!empty($validateData['ingredient_ids'])) {
-            $ingrediants_id=$validateData['ingredient_ids'];
-            $query->whereHas('recipesWithIngredients', function ($q) use ($ingrediants_id) {
+        if (! empty($validateData['ingredient_ids'])) {
+            $ingrediants_id = $validateData['ingredient_ids'];
+            $query->whereHas('ingredientsForRecipe', function ($q) use ($ingrediants_id) {
                 return $q->whereIn('ingredients.id', $ingrediants_id);
             });
         }
 
         // $recipes = $query->get();
-        $recipes=$query->paginate(perPage:2,page:$validateData['page']);
+        $recipes = $query->paginate(perPage: 12, page: $validateData['page']);
 
         return response()->json($recipes);
     }
@@ -52,7 +52,7 @@ class RecipeController extends Controller
             'carbohydrate' => 'required|numeric|min:1',
             'fat' => 'required|numeric|min:1',
             'protein' => 'required|numeric|min:1',
-            'meal_type' => 'required|string|in:breakfast,lunch,dinner'
+            'meal_type' => 'required|string|in:breakfast,lunch,dinner',
         ]);
         $recipe = Recipe::create($validatedData);
 
@@ -62,11 +62,13 @@ class RecipeController extends Controller
     public function show(int $id): JsonResponse
     {
         // $recipe = Recipe::findOrFail($id);// findOrfail return html
-        $recipe = Recipe::where('id',$id)->with('recipesWithIngredients')->get();
+        $recipe = Recipe::select(['id', 'name', 'description', 'kcal', 'carbohydrate', 'fat', 'protein', 'meal_type'])
+            ->where('id', $id)
+            ->with('ingredientsForRecipe:id,name,kcal,carbohydrate,fat,protein')
+            ->get();
         if ($recipe == null) {
             return response()->json('Recipe not found', 404); // [message=>'Recipe not found']
         }
-
 
         return response()->json($recipe, 200);
     }
@@ -85,7 +87,7 @@ class RecipeController extends Controller
             'carbohydrate' => 'required|numeric',
             'fat' => 'required|numeric',
             'protein' => 'required|numeric',
-            'meal_type' => 'required|string|in:breakfast,lunch,dinner'
+            'meal_type' => 'required|string|in:breakfast,lunch,dinner',
         ]);
 
         $recipe->update($validatedData);

@@ -1,3 +1,6 @@
+use formating
+./vendor/bin/pint app/
+
 List of endpoints required for fronted:
 
     Story: Home page
@@ -14,7 +17,7 @@ List of endpoints required for fronted:
 
     Story: Selecting 1 recipe     
     2. Returning recipe by id with ingrediants that recipe contains
-        ** performing join with ingrediants ==ja hint listam pivot tabeli i mozda da se koristi with
+        ** performing join with ingrediants ==ja hint listam pivot tabeli i mozda da se koristi with: DONE
 
     Story: Adming panel working working with ingrediants
     3. Returning all ingrediants (name, specs):DONE

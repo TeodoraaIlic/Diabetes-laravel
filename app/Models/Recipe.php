@@ -26,9 +26,9 @@ class Recipe extends Model
         return $this->belongsToMany(User::class)->using(UserRecipeRating::class);
     }
 
-    public function recipesWithIngredients(): BelongsToMany
+    public function ingredientsForRecipe(): BelongsToMany
     {
         return $this->belongsToMany(Ingredient::class)
-                    ->withPivot('quantity');
+            ->withPivot('quantity');
     }// fja vraca listu ingredianta za neki proizvod
 }
