@@ -15,6 +15,7 @@ class RecipeController extends Controller
             'name' => 'nullable|string|max:32',
             'ingredient_ids' => 'nullable|array',
             'ingredient_ids.*' => 'integer|exists:ingredients,id',
+            'page'=>'required|integer|min:1'
         ]);
 
         $query = Recipe::query();
@@ -36,7 +37,8 @@ class RecipeController extends Controller
             });
         }
 
-        $recipes = $query->get();
+        // $recipes = $query->get();
+        $recipes=$query->paginate(perPage:2,page:$validateData['page']);
 
         return response()->json($recipes);
     }
