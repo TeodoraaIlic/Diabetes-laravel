@@ -17,6 +17,7 @@ class DailyIntake extends Model
         'lunch_portion',
         'dinner',
         'dinner_portion',
+        'date',
     ];
 
     public function user(): BelongsTo

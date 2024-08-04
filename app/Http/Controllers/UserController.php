@@ -2,22 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DailyIntake;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function getAllUsers(): JsonResponse
+    // spisak svih datuma za koje je user uneo daily intake
+    public function showInsertedDailyIntakeDates(int $userId): JsonResponse
     {
-        $users = User::all();
+        // $dailyIntakes = DailyIntake::select(['date'])
+        //                     ->where('user_id', $userId)
+        //                     ->distinct()
+        //                     ->get();
 
-        return response()->json($users);
+        // return response()->json($dailyIntakes);
+
+        $dates = DailyIntake::where('user_id', $userId)
+            ->distinct()
+            ->pluck('date');
+
+        return response()->json(['dates' => $dates]);
     }
 
-    public function getAllUsersWithDailyIntake(): JsonResponse
+    public function showDailyIntake(int $userId, Request $request): JsonResponse
     {
-        $users = User::with('dailyIntakes')->get();
+        $validateData = $request->validate([
+            'date' => 'required|date',
+        ]);
 
-        return response()->json($users);
+        $dailyIntake = DailyIntake::where('user_id', $userId)
+            ->where('date', $validateData['date'])
+            ->first();
+
+        return response()->json($dailyIntake);
+    }
+
+    public function storeDailyIntake(Request $request, $userId)
+    {
+        // Logic to add a new daily intake entry for the user
+    }
+
+    public function updateDailyIntake(Request $request, $userId, $intakeId)
+    {
+        // Logic to update the daily intake information of the user
+    }
+
+    public function destroyDailyIntake($userId, $intakeId)
+    {
+        // Logic to delete a daily intake entry for the user
     }
 }
