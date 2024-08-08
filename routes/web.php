@@ -17,6 +17,8 @@ Route::get('/test', function () {
 //rute za user intake controller
 Route::get('/users/{user_id}/daily-intakes/dates',[UserController::class,'showInsertedDailyIntakeDates']);
 Route::get('/users/{user_id}/daily-intakes',[UserController::class,'showDailyIntake']);
+Route::post('/users/{user_id}/daily-intakes',[UserController::class,'upsertDailyIntakeEmpty']);
+Route::delete('/users/{user_id}/daily-intakes/{intake_id}',[UserController::class,'destroyDailyIntake']);
 
 
 //rute za ingredientController

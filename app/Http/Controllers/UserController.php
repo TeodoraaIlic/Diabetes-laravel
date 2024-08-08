@@ -39,18 +39,40 @@ class UserController extends Controller
         return response()->json($dailyIntake);
     }
 
-    public function storeDailyIntake(Request $request, $userId)
+    /**
+        *upsert
+     */
+    public function upsertDailyIntakeEmpty(Request $request,int $userId)
     {
-        // Logic to add a new daily intake entry for the user
+        $validateData = $request->validate([
+            'date' => 'required|date',
+            'breakfast'=>'nullable|integer|exists:recipes,id',
+            'breakfast_portion'=>'nullable|numeric',
+            'lunch'=>'nullable|integer|exists:recipes,id',
+            'lunch_portion'=>'nullable|numeric',
+            'dinner'=>'nullable|integer|exists:recipes,id',
+            'dinner_portion'=>'nullable|numeric',
+        ]);
+
+        $dailyIntake=DailyIntake::where('date',$validateData['date'])->where('user_id',$userId)->first();
+        if($dailyIntake==null){
+            $validateData['user_id']=$userId;
+        
+            $dailyIntake = DailyIntake::create($validateData);  
+            return response()->json($dailyIntake,201);         
+        }
+
+        $dailyIntake->update($validateData);
+        return response()->json($dailyIntake, 200);
     }
 
-    public function updateDailyIntake(Request $request, $userId, $intakeId)
+    public function destroyDailyIntake(int $userId,int $intakeId)
     {
-        // Logic to update the daily intake information of the user
-    }
-
-    public function destroyDailyIntake($userId, $intakeId)
-    {
-        // Logic to delete a daily intake entry for the user
+        $dailyIntake=DailyIntake::where('user_id',$userId)->where('id',$intakeId)->first();
+        if($dailyIntake==null){
+           return response()->json('Daily intake not found',404);
+        }
+        $dailyIntake->delete();
+        return response()->json(null, 204);
     }
 }

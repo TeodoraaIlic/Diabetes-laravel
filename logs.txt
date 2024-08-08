@@ -7,9 +7,9 @@ List of endpoints required for fronted:
     1. Returning list of recipes with id, name, pictures,calories :DONE
             with filtering (ingrediants, calories, etc,...) **** without ingrediants:DONE
        NOTE: return also rating (this can be done on 2 ways:
-                                1. pulling all the userratings that are related to this recipe and then
+                              *****  1. pulling all the userratings that are related to this recipe and then 
                                     everytime page is reloaded to again calculating the rating (BAD OPTION FOR PERMANCE)
-                                2.  add a new column inside Recipe and calculating rating when recipe is being made or edited and save value to new column
+                              ****  2.  add a new column inside Recipe and calculating rating when recipe is being made or edited and save value to new column
                                     On this way we dont have to do calculation everytime       
                                 )
     
@@ -17,25 +17,26 @@ List of endpoints required for fronted:
 
     Story: Selecting 1 recipe     
     2. Returning recipe by id with ingrediants that recipe contains
-        ** performing join with ingrediants ==ja hint listam pivot tabeli i mozda da se koristi with: DONE
+        performing join with ingrediants ==ja hint listam pivot tabeli i mozda da se koristi with: DONE
 
     Story: Adming panel working working with ingrediants
     3. Returning all ingrediants (name, specs):DONE
     4. Creating new ingreadiant :DONE
-    5. Updating new ingreadiant ( *** if ingreadiant kcal, protein, fat or carbohydrate is updated to update all recipes that contains this ingreadiant -> recalculate its 
+    *** 5. Updating new ingreadiant ( *** if ingreadiant kcal, protein, fat or carbohydrate is updated to update all recipes that contains this ingreadiant -> recalculate its 
           //DELIMICNO                specs according to changes ** TRICKY one)
     
     6. Returning all recipes with ingreadiant (same as 1.):DONE
     7. Updating recipe by id
          possible changes:  1. chaning name:DONE
                             2. chaning description:DONE
-                            3. deleting or inserting ingreadiants 
+                            3. deleting or inserting ingreadiants // THINK TO DO AS NEW ENDPOIT OR AS UPDATE EXISTING ONE
     
-    8. User adding his daily intake
-    9. user updating his daily intake
-    10. user deliting his daily intake
-        1 intake per date!
-    
+    8. User adding his daily intake:DONE
+    9. user updating his daily intake:DONE
+    10. user deliting his daily intake:DONE
+        1 intake per date!:DONE
+
+// sta kod radio sa ratingom mora da se prekalulise 
     11. User rating the product -> also rating for product is recalculated
     12. User removing rating for product-> also rating for product is recalculated
     13. user updating rating for product-> also rating for product is recalculated

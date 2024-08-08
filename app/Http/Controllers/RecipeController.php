@@ -83,10 +83,10 @@ class RecipeController extends Controller
         $validatedData = $request->validate([
             'name' => 'sometimes|required|string|max:32',
             'description' => 'required|string',
-            'kcal' => 'required|numeric',
-            'carbohydrate' => 'required|numeric',
-            'fat' => 'required|numeric',
-            'protein' => 'required|numeric',
+            // 'kcal' => 'required|numeric',
+            // 'carbohydrate' => 'required|numeric',
+            // 'fat' => 'required|numeric',
+            // 'protein' => 'required|numeric',
             'meal_type' => 'required|string|in:breakfast,lunch,dinner',
         ]);
 
