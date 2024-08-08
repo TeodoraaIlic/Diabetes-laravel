@@ -37,9 +37,11 @@ List of endpoints required for fronted:
         1 intake per date!:DONE
 
 // sta kod radio sa ratingom mora da se prekalulise 
+user/1/recipe/1/rating
     11. User rating the product -> also rating for product is recalculated
     12. User removing rating for product-> also rating for product is recalculated
     13. user updating rating for product-> also rating for product is recalculated
+
 
 
                     

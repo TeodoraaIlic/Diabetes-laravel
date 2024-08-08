@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\DailyIntake;
+use App\Models\Recipe;
 use App\Models\User;
+use App\Models\UserRecipeRating;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -75,4 +77,28 @@ class UserController extends Controller
         $dailyIntake->delete();
         return response()->json(null, 204);
     }
+
+    public function storeUserRecipeRating(Request $request,int $userId,int $recipeId)
+    {
+        $validateData = $request->validate([
+            'rating'=>'required|integer|min:1|max:5'     
+        ]);
+
+        $userRecipeRating=UserRecipeRating::where('user_id',$userId)->where('recipe_id',$recipeId)->first();
+        if($userRecipeRating!=null){
+            return response()->json('User already rated recipe!',422);
+        }
+
+        $validateData['user_id']=$userId;
+        $validateData['recipe_id']=$recipeId;
+        $userRecipeRating=UserRecipeRating::create($validateData);
+
+        
+        $averageRating = UserRecipeRating::where('recipe_id', $recipeId)->avg('rating');
+
+        Recipe::where('id', $recipeId)->update(['rating' => $averageRating]);
+    
+        return response()->json($userRecipeRating, 201);
+    }
+    
 }

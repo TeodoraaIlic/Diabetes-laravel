@@ -14,6 +14,11 @@ Route::get('/test', function () {
     return view('test');
 });
 
+//rute za user recipe rating controller
+Route::post('/users/{user_id}/recipe/{recipe_id}/rating',[UserController::class,'storeUserRecipeRating']);
+
+
+
 //rute za user intake controller
 Route::get('/users/{user_id}/daily-intakes/dates',[UserController::class,'showInsertedDailyIntakeDates']);
 Route::get('/users/{user_id}/daily-intakes',[UserController::class,'showDailyIntake']);
