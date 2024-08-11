@@ -19,7 +19,7 @@ class Recipe extends Model
         'fat',
         'protein',
         'meal_type',
-        'rating'
+        'rating',
     ];
 
     public function users(): BelongsToMany

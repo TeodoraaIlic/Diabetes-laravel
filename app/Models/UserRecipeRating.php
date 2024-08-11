@@ -10,9 +10,10 @@ class UserRecipeRating extends Pivot
     use HasFactory;
 
     protected $table = 'user_recipe_ratings';
+
     protected $fillable = [
         'user_id',
         'recipe_id',
-        'rating'
+        'rating',
     ];
 }
