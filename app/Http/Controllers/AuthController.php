@@ -12,26 +12,22 @@ class AuthController extends Controller
 {
     public function register(Request $request): JsonResponse
     {
-
-        // $table->integer('height');
-        // $table->date('birthday_date');
-        // $table->enum('activity_level',['high','medium','low']);
-        $validateData= $request->validate([
+        $validateData = $request->validate([
             'first_name' => 'required|string|max:32',
-            'last_name'=> 'required|string|max:32',
+            'last_name' => 'required|string|max:32',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'type'=>'required|string|in:standard,premium,admin',
-            'height'=>'integer|min:120|max:255',
-            'weight'=>'integer|min:40|max:250',
-            'activity_level'=>'required|string|in:high,medium,low',
-            'birthday_date'=>'required|date',
+            'type' => 'required|string|in:standard,premium,admin',
+            'height' => 'integer|min:120|max:255',
+            'weight' => 'integer|min:40|max:250',
+            'activity_level' => 'required|string|in:high,medium,low',
+            'birthday_date' => 'required|date',
         ]);
 
-        $password=Hash::make($request->password);
+        $password = Hash::make($request->password);
 
-        $validateData['password']=$password;
-        $user=User::create($validateData);
+        $validateData['password'] = $password;
+        $user = User::create($validateData);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -48,8 +44,6 @@ class AuthController extends Controller
 
         $user = User::where('email', $request['email'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
-
-        $user->assignRole('user');
 
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
