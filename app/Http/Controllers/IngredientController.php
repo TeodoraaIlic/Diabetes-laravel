@@ -11,7 +11,7 @@ class IngredientController extends Controller
 {
     public function index(): JsonResponse
     {
-                // $user=Auth::user();
+        // $user=Auth::user();
         // if($user==null)
         //     return response()->json(status:401);
         $ingredient = Ingredient::all();

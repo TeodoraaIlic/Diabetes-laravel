@@ -10,6 +10,10 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::delete('/logout', [AuthController::class, 'logout']);
 
+Route::post('/reset_password_send_email', [AuthController::class, 'resetPasswordMail']);
+Route::put('/reset_password', [AuthController::class, 'resetPassword']);
+
+
 Route::middleware('auth:sanctum')->group(function () {
 
     // Routes accessible by all authenticated users

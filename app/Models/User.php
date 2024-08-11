@@ -28,6 +28,8 @@ class User extends Authenticatable
         'birthday_date',
         'activity_level',
         'type',
+        'reset_password_code',
+        'code_expires_at',
 
         'email',
         'password',
