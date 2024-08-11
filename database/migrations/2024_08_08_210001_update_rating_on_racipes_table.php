@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('recipes', function (Blueprint $table) {
             $table->decimal('rating')->nullable()->change();
-                });
+        });
     }
 
     /**
@@ -24,7 +24,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('recipes', function (Blueprint $table) {
-            $table->integer('rating')->nullable()->change();     
-           });
+            $table->integer('rating')->nullable()->change();
+        });
     }
 };

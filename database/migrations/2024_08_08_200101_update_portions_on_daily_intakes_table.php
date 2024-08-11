@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('daily_intakes', function (Blueprint $table) {
             $table->unsignedInteger('breakfast_portion')->nullable()->change();
             $table->unsignedInteger('lunch_portion')->nullable()->change();
-            $table->unsignedInteger('dinner_portion')->nullable()->change();        
+            $table->unsignedInteger('dinner_portion')->nullable()->change();
         });
     }
 

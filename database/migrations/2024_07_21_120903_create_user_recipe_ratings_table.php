@@ -21,8 +21,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
         });
-        
-        
+
         DB::statement('ALTER TABLE user_recipe_ratings ADD CONSTRAINT check_rating CHECK (rating >= 1 AND rating <= 5)');
     }
 

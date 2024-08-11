@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
+use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -10,6 +11,9 @@ class IngredientController extends Controller
 {
     public function index(): JsonResponse
     {
+                // $user=Auth::user();
+        // if($user==null)
+        //     return response()->json(status:401);
         $ingredient = Ingredient::all();
 
         return response()->json($ingredient);
@@ -68,6 +72,7 @@ class IngredientController extends Controller
 
     public function destroy(int $id): JsonResponse
     {
+
         $ingredient = Ingredient::find($id);
         if ($ingredient == null) {
             return response()->json('Ingredient not found', 404);

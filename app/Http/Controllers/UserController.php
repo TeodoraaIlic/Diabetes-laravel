@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\DailyIntake;
 use App\Models\Recipe;
-use App\Models\User;
 use App\Models\UserRecipeRating;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     // spisak svih datuma za koje je user uneo daily intake
-    public function showInsertedDailyIntakeDates(int $userId): JsonResponse
+    public function showInsertedDailyIntakeDates(): JsonResponse
     {
+        $user = Auth::user();
         // $dailyIntakes = DailyIntake::select(['date'])
         //                     ->where('user_id', $userId)
         //                     ->distinct()
@@ -21,20 +22,21 @@ class UserController extends Controller
 
         // return response()->json($dailyIntakes);
 
-        $dates = DailyIntake::where('user_id', $userId)
+        $dates = DailyIntake::where('user_id', $user->id)
             ->distinct()
             ->pluck('date');
 
         return response()->json(['dates' => $dates]);
     }
 
-    public function showDailyIntake(int $userId, Request $request): JsonResponse
+    public function showDailyIntake(Request $request): JsonResponse
     {
+        $user = Auth::user();
         $validateData = $request->validate([
             'date' => 'required|date',
         ]);
 
-        $dailyIntake = DailyIntake::where('user_id', $userId)
+        $dailyIntake = DailyIntake::where('user_id', $user->id)
             ->where('date', $validateData['date'])
             ->first();
 
@@ -44,8 +46,9 @@ class UserController extends Controller
     /**
      *upsert
      */
-    public function upsertDailyIntakeEmpty(Request $request, int $userId): JsonResponse
+    public function upsertDailyIntakeEmpty(Request $request): JsonResponse
     {
+        $user = Auth::user();
         $validateData = $request->validate([
             'date' => 'required|date',
             'breakfast' => 'nullable|integer|exists:recipes,id',
@@ -56,9 +59,9 @@ class UserController extends Controller
             'dinner_portion' => 'nullable|numeric',
         ]);
 
-        $dailyIntake = DailyIntake::where('date', $validateData['date'])->where('user_id', $userId)->first();
+        $dailyIntake = DailyIntake::where('date', $validateData['date'])->where('user_id', $user->id)->first();
         if ($dailyIntake == null) {
-            $validateData['user_id'] = $userId;
+            $validateData['user_id'] = $user->id;
 
             $dailyIntake = DailyIntake::create($validateData);
 
@@ -70,9 +73,10 @@ class UserController extends Controller
         return response()->json($dailyIntake, 200);
     }
 
-    public function destroyDailyIntake(int $userId, int $intakeId): JsonResponse
+    public function destroyDailyIntake(int $intakeId): JsonResponse
     {
-        $dailyIntake = DailyIntake::where('user_id', $userId)->where('id', $intakeId)->first();
+        $user = Auth::user();
+        $dailyIntake = DailyIntake::where('user_id', $user->id)->where('id', $intakeId)->first();
         if ($dailyIntake == null) {
             return response()->json('Daily intake not found', 404);
         }
@@ -81,18 +85,19 @@ class UserController extends Controller
         return response()->json(null, 204);
     }
 
-    public function storeUserRecipeRating(Request $request, int $userId, int $recipeId): JsonResponse
+    public function storeUserRecipeRating(Request $request, int $recipeId): JsonResponse
     {
+        $user = Auth::user();
         $validateData = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
-        $userRecipeRating = UserRecipeRating::where('user_id', $userId)->where('recipe_id', $recipeId)->first();
+        $userRecipeRating = UserRecipeRating::where('user_id', $user->id)->where('recipe_id', $recipeId)->first();
         if ($userRecipeRating != null) {
             return response()->json('User already rated recipe!', 422);
         }
 
-        $validateData['user_id'] = $userId;
+        $validateData['user_id'] = $user->id;
         $validateData['recipe_id'] = $recipeId;
         $userRecipeRating = UserRecipeRating::create($validateData);
 

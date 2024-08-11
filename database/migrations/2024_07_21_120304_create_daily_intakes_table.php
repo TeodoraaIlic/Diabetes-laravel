@@ -25,11 +25,9 @@ return new class extends Migration
             $table->foreign('breakfast')->references('id')->on('recipes')->onDelete('cascade');
             $table->foreign('lunch')->references('id')->on('recipes')->onDelete('cascade');
             $table->foreign('dinner')->references('id')->on('recipes')->onDelete('cascade');
-          
-
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-          
+
         });
     }
 

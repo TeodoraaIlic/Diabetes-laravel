@@ -55,5 +55,5 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    public function resetPassword() {}
+    public function resetPassword() {}// TO DO: with sending email that cointains reset password token
 }

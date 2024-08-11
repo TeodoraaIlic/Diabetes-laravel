@@ -3,5 +3,5 @@
 return [
     App\Providers\AppServiceProvider::class,
     App\Providers\TelescopeServiceProvider::class,
-    Spatie\Permission\PermissionServiceProvider::class
+    Spatie\Permission\PermissionServiceProvider::class,
 ];
