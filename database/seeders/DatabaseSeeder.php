@@ -13,6 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+
+        $this->call(IngredientSeeder::class);
+        $this->call(RecipeSeeder::class);
+
         $standardUserRole = Role::create(['name' => 'standard']);
         $premiumUserRole = Role::create(['name' => 'premium']);
         $adminUserRole = Role::create(['name' => 'admin']);
