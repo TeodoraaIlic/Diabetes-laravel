@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -40,7 +41,7 @@ class AuthController extends Controller
 
     public function login(Request $request): JsonResponse
     {
-        if (! Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json(['message' => 'Invalid login details'], 401);
         }
 
@@ -52,6 +53,7 @@ class AuthController extends Controller
 
     public function logout(Request $request): JsonResponse
     {
+        // $request->user() ovo je null
         $request->user()->tokens()->delete();
 
         return response()->json(['message' => 'Successfully logged out']);
@@ -66,7 +68,7 @@ class AuthController extends Controller
         }
         $code = $this->generateRandomString();
         $link = 'testlink';
-        Mail::to($validateData['email'])->send(new ResetPassword($link, $code,now()->addMinutes(60)));
+        Mail::to($validateData['email'])->send(new ResetPassword($link, $code, now()->addMinutes(60)));
         $user->update([
             'reset_password_code' => $code,
             'code_expires_at' => now()->addMinutes(60),
@@ -90,7 +92,7 @@ class AuthController extends Controller
             ->where('code_expires_at', '>', now()) // Check if the code hasn't expired
             ->first();
 
-        if (! $user) {
+        if (!$user) {
             return response()->json(['message' => 'Invalid or expired reset code.'], 400);
         }
 

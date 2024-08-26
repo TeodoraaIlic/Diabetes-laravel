@@ -22,9 +22,9 @@ class RecipeSeeder extends Seeder
         ]);
 
         $recipe1->ingredientsForRecipe()->attach([
-            Ingredient::where('name', 'Chicken Breast')->first()->id => ['quantity' => 200],
-            Ingredient::where('name', 'Broccoli')->first()->id => ['quantity' => 150],
-            Ingredient::where('name', 'Olive Oil')->first()->id => ['quantity' => 10],
+            Ingredient::where('name', 'Chicken Breast')->first()->id => ['quantity' => 2], // 2x100 grams
+            Ingredient::where('name', 'Broccoli')->first()->id => ['quantity' => 1.5], // 1.5x100 grams
+            Ingredient::where('name', 'Olive Oil')->first()->id => ['quantity' => 0.1], // 0.1x100 ml (10 ml)
         ]);
 
         $this->updateRecipeNutrition($recipe1);
@@ -41,9 +41,9 @@ class RecipeSeeder extends Seeder
         ]);
 
         $recipe2->ingredientsForRecipe()->attach([
-            Ingredient::where('name', 'Rice')->first()->id => ['quantity' => 100],
-            Ingredient::where('name', 'Almonds')->first()->id => ['quantity' => 50],
-            Ingredient::where('name', 'Olive Oil')->first()->id => ['quantity' => 5],
+            Ingredient::where('name', 'Rice')->first()->id => ['quantity' => 1], // 1x100 grams
+            Ingredient::where('name', 'Almonds')->first()->id => ['quantity' => 0.5], // 0.5x100 grams (50 grams)
+            Ingredient::where('name', 'Olive Oil')->first()->id => ['quantity' => 0.05], // 0.05x100 ml (5 ml)
         ]);
 
         $this->updateRecipeNutrition($recipe2);
@@ -57,10 +57,24 @@ class RecipeSeeder extends Seeder
         $totalProtein = 0;
 
         foreach ($recipe->ingredientsForRecipe as $ingredient) {
-            $totalKcal += $ingredient->kcal * $ingredient->pivot->quantity / 100;
-            $totalCarbohydrate += $ingredient->carbohydrate * $ingredient->pivot->quantity / 100;
-            $totalFat += $ingredient->fat * $ingredient->pivot->quantity / 100;
-            $totalProtein += $ingredient->protein * $ingredient->pivot->quantity / 100;
+            $quantity = $ingredient->pivot->quantity; // Adjusted quantity based on measurement unit
+
+            // Calculate based on measurement unit
+            switch ($ingredient->measurement_unit) {
+                case '100_grams':
+                case '100_ml':
+                    $totalKcal += $ingredient->kcal * $quantity;
+                    $totalCarbohydrate += $ingredient->carbohydrate * $quantity;
+                    $totalFat += $ingredient->fat * $quantity;
+                    $totalProtein += $ingredient->protein * $quantity;
+                    break;
+                case '1_piece':
+                    $totalKcal += $ingredient->kcal * $quantity;
+                    $totalCarbohydrate += $ingredient->carbohydrate * $quantity;
+                    $totalFat += $ingredient->fat * $quantity;
+                    $totalProtein += $ingredient->protein * $quantity;
+                    break;
+            }
         }
 
         $recipe->update([
